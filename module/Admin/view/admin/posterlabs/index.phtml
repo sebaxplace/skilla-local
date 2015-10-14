@@ -1,0 +1,78 @@
+<div class="page-content-wrapper">
+		<div class="page-content">
+
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-university"></i>
+						<a href="#"><?php echo $this->titulo;?></a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					
+				</ul>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-6 pull-right no-padding">
+						<a href="<?php echo $this->basePath() ?>/admin/posterlabs/crear" class="btn purple pull-right">Aggiungi nuovo <i class="fa fa-plus white"></i></a>
+					</div>
+
+
+<div class=" table-responsive col-md-12 nopadding">
+<table class="table table-striped table-hover dataTable no-footer" role="grid" id="sample_2" role="grid" aria-describedby="sample_2_info">
+        <thead>
+            <tr class="heading">
+   
+                <th class="cien"><?php echo $this->tablaid; ?></th>
+                <th><?php echo $this->tablanombre; ?></th>
+                <th><?php echo $this->tablaapellido; ?></th>
+                <th><?php echo $this->tablaemail; ?></th>
+                <th><?php echo $this->tablasteps; ?></th>
+                <th><?php echo $this->tablastato; ?></th>
+                
+    </thead>
+        <tbody>
+            
+    <?php 
+    
+    foreach ($this->usuarios as $usuario):
+    ?>
+        <tr role="row" class="odd edit">
+           
+            <td><?php echo $usuario->getId() ?> </td>
+            
+            <td class="sorting_1">
+            <p class="titolo"><?php echo $usuario->getTitolo() ?></p>
+                	<div class="row-actions">
+                	<span><a href="<?php echo $this->basePath() ?>/admin/posterlabs/editar/<?php echo $usuario->getId() ?>"><?php echo $this->tablamodifica; ?></a> | </span>
+                	<span><a onclick="return confirm('Vuoi eliminare a <?php echo $usuario->getTitolo() ?>?');" href="<?php echo $this->basePath() ?>/admin/posterlabs/eliminar/<?php echo $usuario->getId() ?>"><?php echo $this->tablaelimina; ?></a> | </span>
+                	<span><a href="<?php echo $this->basePath() ?>/admin/posterlabs/ver/<?php echo $usuario->getId() ?>"><?php echo $this->placever; ?></a></span>
+                	</div>
+            </td>
+            <td>
+                <p class="titolo"><?php echo $usuario->getRelatori()->getNome().' '.$usuario->getRelatori()->getCognome(); ?></p>
+            </td>
+            <td>
+                <?php echo $usuario->getDurata(); ?>
+            </td>
+            <td>
+                <?php echo $usuario->getSteps(); ?>
+            </td>
+            <td><?php if($usuario->getStato() == 1){echo '<span class="label fleft label-sm label-success">Attivato</span>';
+            }else{
+                echo '<span class="label fleft label-sm label-danger">Disattivato</span>';} ?></td>
+            
+            
+        </tr>
+    <?php endforeach; ?>
+
+    <?php
+    $this->cycle()->assign(array("#F0F0F0", "#FFFFFF"));
+    $this->cycle()->prev();
+    ?>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>

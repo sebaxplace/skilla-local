@@ -1,0 +1,20 @@
+<?php  foreach($this->postit as $postit): 
+                            $posicion = $postit->getXyz();
+                            $pociciones = explode('x', $posicion);
+                            $idcambia = $postit->getId();
+                    ?>
+                        <div class="note <?php echo $postit->getColor(); ?> ui-draggable ui-draggable-handle" id="contenedor<?php echo $postit->getId(); ?>" style="left:<?php echo $pociciones[0]; ?>px;top:<?php echo $pociciones[1]; ?>px;z-index:<?php echo $pociciones[2]; ?>">
+                    		<span class="elimino right top0" onClick="eliminar(<?php echo $postit->getId(); ?>)">
+                                <i class="icon-cross  font-red plusicon2 px24"></i>
+                            </span>
+                            <span class="minimi left top0" onClick="minimi(<?php echo $postit->getId(); ?>)">
+                                    <i class="icon-popup px24"></i>
+                                </span>
+                    		<?php echo $this->escapeHtml($postit->getMessaggio()); ?>
+                    		<div class="author"><?php echo $this->escapeHtml($postit->getNome()); ?></div>
+                    		<span class="data"><?php echo $postit->getId(); ?></span>
+                    	</div>
+                    	
+                    <script type="text/javascript">$('.lasted').val('<?php echo $postit->getId(); ?>');make_draggable($('.note'));</script>
+                    <?php  endforeach; ?>
+                    

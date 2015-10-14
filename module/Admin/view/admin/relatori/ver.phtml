@@ -1,0 +1,100 @@
+<div class="page-content-wrapper">
+	<div class="page-content">
+
+
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><i class="fa fa-microphone"></i> <a
+					href="<?php echo $this->basePath() ?>/admin/relatori/index"><?php echo $this->sezione; ?></a>
+					<i class="fa fa-angle-right"></i></li>
+				<li><a href="#"><?php echo $this->titulo; ?></a> <i
+					class="fa fa-angle-right"></i></li>
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-6 left pull-left no-padding">
+					<a href="<?php echo $this->basePath() ?>/admin/relatori/index"
+						class="btn yellow-casablanca pull-left"><i class="fa fa-angle-left "></i> <?php echo $this->volver; ?> </a>
+				</div>
+			</div>
+		</div>
+
+<div class="col-md-12"><br></div>
+
+     <div class="row">
+		<div class="col-md-12">
+			<div class="portlet box yellow-casablanca">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-thumb-tack"></i>Profilo Relatore
+					</div>
+					<div class="tools">
+						<a href="javascript:;" class="collapse" data-original-title=""
+							title=""> </a> <a href="#portlet-config" data-toggle="modal"
+							class="config" data-original-title="" title=""> </a> <a
+							href="javascript:;" class="reload" data-original-title=""
+							title=""> </a> <a href="javascript:;" class="remove"
+							data-original-title="" title=""> </a>
+					</div>
+				</div>
+			
+			<div class="portlet-body">
+<?php if ($this->usuario !== null): ?>
+		<div class="row">
+			<div class="col-md-3">
+				<ul class="list-unstyled profile-nav">
+					<li><img src="<?php echo $this->basepath('../'.$this->usuario->getImmagine()); ?>" class="img-responsive" alt=""> 
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-8 profile-info">
+						<h1><?php echo $this->usuario->getNome()?> <?php echo $this->usuario->getCognome()?></h1>
+						<p><?php echo $this->usuario->getTesto()?></p>
+						
+						<ul class="list-inline">
+							<li><i class="fa fa-envelope"></i> <?php echo $this->usuario->getEmail()?></li>
+							<li><i class="fa fa-linkedin-square"></i><a href="<?php echo $this->usuario->getLink()?>" target="_blank"> <?php echo $this->usuario->getLink()?> </a></li>
+							
+						</ul>
+						<p>
+						Stato:
+						<?php
+                            if ($this->usuario->getStato() == 1) {
+                                echo '<span class="label fleft label-sm label-success">Attivato</span>';
+                            } else {
+                                echo '<span class="label fleft label-sm label-danger">Disattivato</span>';
+                            }
+                            ?>
+						</p>
+						<p>
+						<a href="<?php echo $this->basePath() ?>/admin/relatori/editar/<?php echo $this->usuario->getId();?>" class="btn green-sharp pull-left"> Modifica </a>
+						</p>
+					</div>
+					<!--end col-md-8-->
+					<div class="col-md-4">
+						
+					</div>
+					<!--end col-md-4-->
+				</div>
+				<!--end row-->
+
+			</div>
+		</div>
+
+		
+    
+<?php else: ?>
+    <h4>Utente non trovato</h4>
+<?php endif; ?>
+</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+
+
+

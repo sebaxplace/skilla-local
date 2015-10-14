@@ -1,0 +1,24 @@
+
+function cargarPostit()
+{
+    var id = "Id="+$('.posterlab').val();
+    var last = "Last="+$('.lasted').val();
+    var data = id+'&'+ last;
+    
+    $.ajax({
+        type: "POST",
+        url: "<?php echo $this->basePath('/application/index/cargardomanda'); ?>", 
+        data: data,
+        success: function(html){
+            $("#main").append(html);
+        }
+    });
+}
+
+$(document).ready(function(){
+    setInterval(function(){
+        setTimeout(function(){
+            cargarPostit();
+        }, 100)
+    }, 5000);
+});

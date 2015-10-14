@@ -1,0 +1,88 @@
+
+	<div class="page-sidebar-wrapper">
+		
+		<div class="page-sidebar navbar-collapse collapse">
+			
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				
+				<li class="sidebar-toggler-wrapper">
+					
+					<!-- <div class="sidebar-toggler">
+					</div> -->
+					<br><br><br><br>
+					
+				</li>
+				
+				<li class="sidebar-search-wrapper">
+					
+				</li>
+				<!-- <li class="start ">
+					<a href="javascript:;">
+					<i class="fa fa-home"></i>
+					<span class="title">Dashboard</span>
+					</a>
+				</li> -->
+				<li <?php if($this->Indirizzi()->accion() == 'relatori'){echo ' class="active open"';} ?>>
+					<a href="<?php echo $this->basePath() ?>/admin/relatori">
+					<i class="fa fa-microphone"></i>
+					<span class="title">Relatori 
+					<?php if($this->Indirizzi()->accion() == 'relatori'){echo ' <i class="fa fa-angle-right " style="float:right"></i>';}else{echo '<i class="fa fa-angle-left " style="float:right"></i>';} ?>
+					</span>
+					
+					</a>
+					
+				</li>
+				
+				<li <?php if($this->Indirizzi()->accion() == 'posterlabs'){echo ' class="active open"';} ?>>
+					<a href="<?php echo $this->basePath() ?>/admin/posterlabs">
+					<i class="fa fa-university"></i>
+					<span class="title">Posterlabs 
+					<?php if($this->Indirizzi()->accion() == 'posterlabs'){echo ' <i class="fa fa-angle-right " style="float:right"></i>';}else{echo '<i class="fa fa-angle-left " style="float:right"></i>';} ?>
+					
+					</span>
+					
+					</a>
+					
+				</li>
+				<li <?php if($this->Indirizzi()->accion() == 'contenuti'){echo ' class="active open"';} ?>>
+					<a href="<?php echo $this->basePath() ?>/admin/contenuti">
+					<i class="fa fa-th"></i>
+					<span class="title">Contenuti
+					<?php if($this->Indirizzi()->accion() == 'contenuti'){echo ' <i class="fa fa-angle-right " style="float:right"></i>';}else{echo '<i class="fa fa-angle-left " style="float:right"></i>';} ?>
+					</span>
+					
+					
+					</a>
+					
+				</li>
+				<li <?php if($this->Indirizzi()->accion() == 'interattivo'){echo ' class="active open"';} ?>>
+					<a href="<?php echo $this->basePath() ?>/admin/interattivo">
+					<i class="fa fa-weixin"></i>
+					<span class="title">Interattivo
+					<?php if($this->Indirizzi()->accion() == 'interattivo'){echo ' <i class="fa fa-angle-right " style="float:right"></i>';}else{echo '<i class="fa fa-angle-left " style="float:right"></i>';} ?>
+					</span>
+					
+					
+					</a>
+					
+				</li>
+				<li><br></li>
+				<li><br></li>
+				<li><br></li>
+				
+				
+
+				<li <?php if($this->Indirizzi()->accion() == 'utenti'){echo ' class="active open"';} ?>>
+					<a href="<?php echo $this->basePath() ?>/admin/utenti">
+					<i class="fa fa-users"></i>
+					<span class="title">Utenti di sistema
+					<?php if($this->Indirizzi()->accion() == 'utenti'){echo ' <i class="fa fa-angle-right " style="float:right"></i>';}else{echo '<i class="fa fa-angle-left " style="float:right"></i>';} ?>
+					</span>
+					
+					</a>
+					
+				</li>
+			</ul>
+			
+		</div>
+	</div>

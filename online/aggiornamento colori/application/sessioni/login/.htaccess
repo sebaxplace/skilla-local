@@ -1,0 +1,8 @@
+
+      RewriteEngine On
+      Header add Access-Control-Allow-Origin "http://posterlab.skilla.com"
+      RewriteCond %{REQUEST_FILENAME} -s [OR]
+      RewriteCond %{REQUEST_FILENAME} -l [OR]
+      RewriteCond %{REQUEST_FILENAME} -d
+      RewriteRule ^.*$ - [NC,L]
+      RewriteRule ^.*$ index.php [NC,L]

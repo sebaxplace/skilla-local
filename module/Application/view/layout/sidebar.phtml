@@ -1,0 +1,34 @@
+
+	<div class="page-sidebar-wrapper">
+		
+		<div class="page-sidebar navbar-collapse collapse">
+			
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				
+				<li class="sidebar-toggler-wrapper">
+					
+					<div class="sidebar-toggler">
+					</div>
+					
+				</li>
+				
+				   
+					
+				 
+				<li class="start ">
+					<a href="javascript:;">
+					<i class="fa fa-home"></i>
+					<span class="title">Dashboard</span>
+					</a>
+				</li>
+				<?php foreach($this->posterlab as $posterlab):?>
+                     <li> 
+                        <a class="btn btn-default" href="<?php //echo $this->basePath() ?>/application/index/posterlab/<?php //echo $posterlab->getPosterlab()->getId().'?ids='.$posterlab->getId() ?>">
+                         <span class="title">Step <?php //echo $posterlab->getPosizione(); ?></span>
+                        </a>
+                     </li>   
+                    <?php endforeach;?>
+			</ul>
+			
+		</div>
+	</div>

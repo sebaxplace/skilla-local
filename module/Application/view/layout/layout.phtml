@@ -1,0 +1,71 @@
+
+<?php echo $this->doctype(); ?>
+
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Explorer E-learning '. $this->translate('Energy Web'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('css/stylespostit2.css'))
+                        ->prependStylesheet($this->basePath('css/jquery.fancybox-1.2.6.css'))
+                        ->prependStylesheet($this->basePath('css/custom_icon.css'))
+                        //->prependStylesheet($this->basePath('assets/admin/layout/css/themes/skilla.css'))
+                        //->prependStylesheet($this->basePath('assets/admin/layout/css/layout.css'))
+                        //->prependStylesheet($this->basePath('css/components.css'))
+                        //->prependStylesheet($this->basePath('plugins/font-awesome/css/font-awesome.min.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap/css/bootstrap.min.css')) 
+                        //->prependStylesheet($this->basePath('css/bootstrap/css/bootstrap.min.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap/css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('css/foundation.min.css'));
+        
+        echo $this->headScript()->prependFile($this->basePath('js/modernizr.js'));
+        ?>
+
+     
+
+    </head>
+    
+    <body>
+<?php // echo $this->partial('content/header', array('acl' => $this->layout()->acl, 'isLoggedIn'=>$this->layout()->isLoggedIn)); ?>
+<?php echo $this->partial('layout/header'); ?>
+       
+
+
+    <?php echo $this->content; ?>   
+ 
+    
+<?php echo $this->partial('layout/footer'); ?> 
+ <!-- END FOOTER -->   
+     
+        <?php 
+       
+        echo $this->headScript()
+        //->prependFile($this->basePath('js/script.js'))
+        ->prependFile($this->basePath('js/jquery.fancybox-1.2.6.pack.js'))
+        //->prependFile($this->basePath('plugins/bootstrap/js/bootstrap.min.js'))
+        
+        ->prependFile($this->basePath('js/jquery.countdown.js'))
+        ->prependFile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js')
+        //->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+        ->prependFile($this->basePath('js/foundation.min.js'))
+        ->prependFile($this->basePath('js/jquery.js'));
+        //->prependFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js');
+       
+       echo $this->inlineScript()->appendScript("
+                $('div#my-timer').countdown('".$this->timeraggio."', function(event) {
+                   $(this).html(event.strftime(' %M:%S'));
+                });"
+            );
+        
+        echo $this->inlineScript()->appendScript("$(document).foundation();");
+        ?>
+    </body>
+</html>
+

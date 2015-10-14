@@ -1,0 +1,31 @@
+<div class="large-12 columns">
+<br/>
+<div class="large-6 columns panel">
+<h3><?php echo $this->titulo; ?></h3>
+<p><a href="<?php echo $this->basePath() ?>/usuarios/index/listar"class="button tiny success"> &DoubleLeftArrow; <?php echo $this->volver; ?></a>
+</p>
+<?php if ($this->usuario !== null): ?>
+    <p>
+        <span><strong>Id:</strong></span>
+        <?php echo $this->usuario->getId() ?>
+    </p>
+    <p>
+        <span><strong>Nombre:</strong></span>
+        <?php echo $this->usuario->getNombre() ?>
+    </p>
+    <p>
+        <span><strong>Apellido:</strong></span>
+        <?php echo $this->usuario->getApellido() ?>
+    </p>
+    <p>
+        <span><strong>Email:</strong></span>
+        <?php echo $this->usuario->getEmail() ?>
+    </p>
+<?php else: ?>
+    <h4>Usuario no encontrado</h4>
+<?php endif; ?>
+</div>
+</div>
+
+
+

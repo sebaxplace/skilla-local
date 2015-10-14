@@ -1,0 +1,61 @@
+
+<div class="large-12 columns" style="margin-top:100px;">
+<table class="cien">
+        <thead>
+            <tr class="heading">
+   
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Relatore</th>
+                <th>Durata</th>
+                <th>Steps</th>
+                <th>Visualizza</th>
+                
+    </thead>
+        <tbody>
+            
+    <?php 
+    
+    foreach ($this->usuarios as $usuario):
+    
+    ?>
+        <tr  style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0",
+                "#FFFFFF"))
+            ->next()
+    ?>">
+           
+            <td><?php echo $usuario->getId() ?> </td>
+            
+            <td class="sorting_1">
+            <p class="titolo"><?php echo $usuario->getTitolo() ?></p>
+                	
+            </td>
+            <td>
+                <p class="titolo"><?php echo $usuario->getRelatori()->getNome().' '.$usuario->getRelatori()->getCognome(); ?></p>
+            </td>
+            <td>
+                <?php echo $usuario->getDurata(); ?>
+            </td>
+            <td>
+                <?php echo $usuario->getSteps(); ?>
+            </td>
+            <td>
+            <?php if($usuario->getStatosessione()== 1):?>
+                <a href="<?php echo $this->basePath() ?>/application/index/posterlab/<?php echo $usuario->getId() ?>" class="button tiny success">Riprendi Sessione</a>
+                <a href="<?php echo $this->basePath() ?>/application/index/chiudisessione/<?php echo $usuario->getId() ?>" class="button tiny alert">Chiudi Sessione</a>
+            <?php else:?>
+            <a href="<?php echo $this->basePath() ?>/application/index/sessionposterlab/<?php echo $usuario->getId() ?>" class="button tiny">Inizia Sessione</a>
+            <?php endif;?>
+            </td>
+            
+            
+        </tr>
+    <?php endforeach; ?>
+
+    <?php
+    $this->cycle()->assign(array("#F0F0F0", "#FFFFFF"));
+    $this->cycle()->prev();
+    ?>
+</table>
+</div>

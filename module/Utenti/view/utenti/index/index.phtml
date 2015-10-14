@@ -1,0 +1,33 @@
+<div class="large-12 columns">
+<h3><?php echo $this->titulo; ?></h3>
+
+
+
+<table style="text-align:left;width:100%">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Password</th>
+    </tr>
+    <?php foreach ($this->listaUsuario as $usuario): ?>
+        <tr style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0",
+                "#FFFFFF"))
+            ->next()
+    ?>">
+
+            <td><?php echo $usuario->getId() ?></td>
+            <td><?php echo $usuario->getNome() ?></td>
+            <td><?php echo $usuario->getPassword() ?></td>
+            <td>
+                <a href="<?php echo $this->basePath() ?>/utenti/index/ver/<?php echo $usuario->getId() ?>" class="button tiny">Vedi</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+    <?php
+    $this->cycle()->assign(array("#F0F0F0", "#FFFFFF"));
+    $this->cycle()->prev();
+    ?>
+</table>
+</div>

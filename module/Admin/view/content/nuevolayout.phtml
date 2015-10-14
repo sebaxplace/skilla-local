@@ -1,0 +1,84 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Explorer E-learning '. $this->translate('Energy Web'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/custom.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/themes/darkblue.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/layout.css'))
+                        ->prependStylesheet($this->basePath('assets/global/css/plugins.css'))
+                        ->prependStylesheet($this->basePath('assets/global/css/components.css'))
+                        
+                        ->prependStylesheet($this->basePath('assets/admin/pages/css/login.css'))
+                        ->prependStylesheet($this->basePath('assets/global/plugins/uniform/css/uniform.default.css'))
+                        ->prependStylesheet($this->basePath('assets/global/plugins/bootstrap/css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('assets/global/plugins/simple-line-icons/simple-line-icons.min.css'))
+                        ->prependStylesheet($this->basePath('plugins/font-awesome/css/font-awesome.min.css'))
+        
+        ?>
+
+     
+
+    </head>
+
+<body class="login">
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+	<!-- BEGIN LOGIN FORM -->
+	<div class="large-12 columns"><br></div>
+<?php echo $this->content; ?>   
+	<!-- END LOGIN FORM -->
+	<!-- BEGIN FORGOT PASSWORD FORM -->
+	
+	<!-- END FORGOT PASSWORD FORM -->
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright">
+	 2015 &copy; Powered by Xplace
+</div>
+    
+    
+    
+ <!-- END FOOTER -->   
+     
+        <?php 
+        
+        echo $this->headScript()
+        ->prependFile($this->basePath('assets/admin/pages/scripts/login.js'))
+        
+        ->prependFile($this->basePath('assets/admin/layout/scripts/demo.js'))
+        ->prependFile($this->basePath('assets/admin/layout/scripts/layout.js'))
+        ->prependFile($this->basePath('ssets/global/scripts/metronic.js'))
+        ->prependFile($this->basePath('assets/global/plugins/select2/select2.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery-validation/js/jquery.validate.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery.cokie.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/uniform/jquery.uniform.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery.blockui.min.js'))
+        
+        ->prependFile($this->basePath('assets/global/plugins/bootstrap/js/bootstrap.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery-migrate.min.js'))
+        ->prependFile($this->basePath('plugins/jquery.min.js'));
+        
+        echo $this->inlineScript()->appendScript("
+           jQuery(document).ready(function() {     
+  Metronic.init(); // init metronic core components
+  Layout.init(); // init current layout
+  Login.init();
+  Demo.init();
+});"); ?>
+    </body>
+</html>

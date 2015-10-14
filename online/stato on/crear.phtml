@@ -1,0 +1,249 @@
+<div class="page-content-wrapper">
+		<div class="page-content">
+
+		
+		<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-weixin"></i>
+						<a href="<?php echo $this->basePath() ?>/admin/interattivo/index"><?php echo $this->sezione; ?></a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#"><?php echo $this->titulo; ?></a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+				</ul>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-6 left pull-left no-padding">
+						<a href="<?php echo $this->basePath() ?>/admin/interattivo/index" class="btn green-jungle pull-left"><i class="fa fa-angle-left "></i> <?php echo $this->volver; ?> </a>
+					</div>
+				</div>
+			</div>		
+		
+		
+		
+<div class="col-md-12">
+<br>
+</div>		
+
+<div class="col-md-12">
+<br>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+
+	           
+<?php
+
+// within a view script 
+$form = $this->form; 
+$form->prepare();
+$form->setAttribute('action', $this->url('admin', array(
+    'controller' => 'interattivo',
+    'action' => 'guardar'
+)));
+
+$form->setAttribute('method', 'post'); 
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+// Render the opening tag
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->formHidden($form->get('xyz'));
+echo $this->formHidden($form->get('sessione'));
+echo $this->formHidden($form->get('data'));
+echo $this->formHidden($form->get('nome'));
+
+?>
+
+                
+				
+			
+				
+<div class="portlet grey box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bars"></i>
+            <?php
+            $messaggio = $form->get('messaggio');
+            echo $formLabel->openTag() . $messaggio->getOption('label');
+            ?>
+                <span class="required">(Obbligatorio)</span> 
+            <?php echo $formLabel->closeTag();?>							
+		  </div>
+		  <div class="tools">
+		      <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+		  </div>
+	</div>
+	<div class="portlet-body">
+        <div class="input-group">
+            <span class="input-group-addon">
+			 <?php 				
+                echo $this->formInput($messaggio);
+                echo '<small class="label  label-danger">'.$this->formElementErrors($messaggio).'</small>';
+             ?>
+			 </span>
+    	</div>
+    </div>
+</div>
+
+<div class="portlet grey box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bars"></i>
+            <?php
+            $color = $form->get('color');
+            echo $formLabel->openTag() . $color->getLabel();
+            ?>
+                <span class="required">(Obbligatorio)</span>  
+            <?php echo $formLabel->closeTag();?>							
+		  </div>
+		  <div class="tools">
+		      <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+		  </div>
+	</div>
+	<div class="portlet-body">
+        <div class="input-group">
+            <span class="input-group-addon">
+			 <?php 				
+                echo $this->formSelect($color);
+                echo '<small class="label  label-danger">'.$this->formElementErrors($color).'</small>';
+             ?>
+			 </span>
+    	</div>
+    </div>
+</div>
+
+<div class="portlet grey box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bars"></i>
+            <?php
+            $stato = $form->get('stato');
+            echo $formLabel->openTag() . $stato->getLabel();
+            ?>
+            <?php echo $formLabel->closeTag();?>							
+		  </div>
+		  <div class="tools">
+		      <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+		  </div>
+	</div>
+	<div class="portlet-body">
+        <div class="input-group">
+        <div class="col-md-1">
+            <span class="input-group-addon">
+            
+			 <?php 				
+                echo $this->formCheckbox($stato);
+                echo '<small class="label  label-danger">'.$this->formElementErrors($stato).'</small>';
+             ?>
+             
+			 </span>
+			 </div>
+    	</div>
+    </div>
+</div>
+
+</div>
+
+<div class="col-md-6 noleft">
+
+
+
+<div class="portlet grey box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bars"></i>
+            <?php
+            $posterlab = $form->get('posterlab');
+            echo $formLabel->openTag() . $posterlab->getLabel();
+            ?>
+                <span class="required">(Obbligatorio)</span>  
+            <?php echo $formLabel->closeTag();?>							
+		  </div>
+		  <div class="tools">
+		      <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+		  </div>
+	</div>
+	<div class="portlet-body">
+        <div class="input-group">
+            <span class="input-group-addon">
+			 <?php 				
+                echo $this->formSelect($posterlab);
+                echo '<small class="label  label-danger">'.$this->formElementErrors($posterlab).'</small>';
+             ?>
+			 </span>
+    	</div>
+    </div>
+</div>
+
+
+
+<div class="portlet grey box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bars"></i>
+            <?php
+            $tipo = $form->get('tipo');
+            echo $formLabel->openTag() . $tipo->getLabel();
+            ?>
+                <span class="required">(Obbligatorio)</span>  
+            <?php echo $formLabel->closeTag();?>							
+		  </div>
+		  <div class="tools">
+		      <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+		  </div>
+	</div>
+	<div class="portlet-body">
+        <div class="input-group">
+            <span class="input-group-addon">
+			 <?php 				
+                echo $this->formSelect($tipo);
+                echo '<small class="label  label-danger">'.$this->formElementErrors($tipo).'</small>';
+             ?>
+			 </span>
+    	</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php echo $this->formElement($form->get('send')) ?> 
+
+
+<?php echo $this->form()->closeTag() ?>
+</div>
+
+</div>
+</div>
+</div>

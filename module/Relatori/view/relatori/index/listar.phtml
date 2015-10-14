@@ -1,0 +1,66 @@
+<div class="large-12 columns">
+<h3><?php echo $this->titulo; ?></h3>
+
+<?php 
+
+// within a view script
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url('usuarios', array(
+    'controller' => 'index',
+    'action' => 'buscar'
+)));
+
+$form->setAttribute('method', 'post');
+
+// Render the opening tag
+echo $this->form()->openTag($form);
+
+?>
+      <div class="row collapse">
+        <div class="small-10 columns">
+       
+          <?php
+            $nombre = $form->get('nombre');
+            echo $this->formInput($nombre);
+           ?>
+        </div>
+        <div class="small-2 columns">
+       
+          <?php echo $this->formElement($form->get('send')) ?> 
+        </div>
+      </div>
+   
+<?php echo $this->form()->closeTag() ?>
+
+<table style="text-align:left;width:100%">
+    <tr>
+        <th><?php echo $this->tablaid; ?></th>
+        <th><?php echo $this->tablanombre; ?></th>
+        <th><?php echo $this->tablaapellido; ?></th>
+        <th><?php echo $this->tablaemail; ?></th>
+        <th><?php echo $this->tabladetalle; ?></th>
+    </tr>
+    <?php foreach ($this->listaUsuario as $usuario): ?>
+        <tr style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0",
+                "#FFFFFF"))
+            ->next()
+    ?>">
+
+            <td><?php echo $usuario->getId() ?></td>
+            <td><?php echo $usuario->getNombre() ?></td>
+            <td><?php echo $usuario->getApellido() ?></td>
+            <td><?php echo $usuario->getEmail() ?></td>
+            <td>
+                <a href="<?php echo $this->basePath() ?>/usuarios/index/ver/<?php echo $usuario->getId() ?>" class="button tiny"><?php echo $this->placever; ?></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+    <?php
+    $this->cycle()->assign(array("#F0F0F0", "#FFFFFF"));
+    $this->cycle()->prev();
+    ?>
+</table>
+</div>

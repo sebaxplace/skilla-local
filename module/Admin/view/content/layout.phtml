@@ -1,0 +1,127 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Explorer E-learning '. $this->translate('Energy Web'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('plugins/pace/themes/pace-theme-barber-shop.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/flag-icon.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/custom.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/themes/green_xplace.css'))
+                        ->prependStylesheet($this->basePath('assets/admin/layout/css/layout.css'))
+                        ->prependStylesheet($this->basePath('css/plugins.css'))
+                        ->prependStylesheet($this->basePath('css/components.css'))
+                        
+                        ->prependStylesheet($this->basePath('plugins/icheck/skins/all.css'))
+                        ->prependStylesheet($this->basePath('plugins/cropper/css/cropper.css'))
+                        ->prependStylesheet($this->basePath('plugins/dropzone/css/dropzone.css'))
+                        ->prependStylesheet($this->basePath('plugins/jquery-multi-select/css/multi-select.css'))
+                        ->prependStylesheet($this->basePath('plugins/bootstrap-select/bootstrap-select.min.css'))
+                        
+                        
+                        ->prependStylesheet($this->basePath('css/theme.blue.css'))
+                        ->prependStylesheet($this->basePath('css/jquery.tablesorter.pager.css'))
+                        
+                        //->prependStylesheet($this->basePath('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css'))
+                        //->prependStylesheet($this->basePath('assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css'))
+                        //->prependStylesheet($this->basePath('assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css'))
+       // <link href="../css/theme.blue.css" rel="stylesheet">
+       // <link rel="stylesheet" href="../addons/pager/jquery.tablesorter.pager.css">
+                        ->prependStylesheet($this->basePath('plugins/select2/select2.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-fileinput/bootstrap-fileinput.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-colorpicker/css/colorpicker.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-datepicker/css/datepicker3.css'))
+                        
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-markdown/css/bootstrap-markdown.min.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-wysihtml5/wysiwyg-color.css'))
+                        //->prependStylesheet($this->basePath('plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'))
+                        //->prependStylesheet($this->basePath('plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css'))
+                        //->prependStylesheet($this->basePath('plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css'))
+                        
+                        //->prependStylesheet($this->basePath('plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css'))
+                        ->prependStylesheet($this->basePath('plugins/bootstrap-switch/css/bootstrap-switch.min.css'))
+                        ->prependStylesheet($this->basePath('plugins/uniform/css/uniform.default.css'))
+                        ->prependStylesheet($this->basePath('plugins/bootstrap/css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('plugins/font-awesome/css/font-awesome.min.css'))
+        
+        ?>
+
+     
+
+    </head>
+    
+    <body class="page-header-fixed page-quick-sidebar-over-content ">
+<?php // echo $this->partial('content/header', array('acl' => $this->layout()->acl, 'isLoggedIn'=>$this->layout()->isLoggedIn)); ?>
+<?php echo $this->partial('content/header'); ?>
+       
+
+<div class="page-container">      
+    <?php echo $this->partial('content/sidebar'); ?>   
+    <?php echo $this->content; ?>   
+</div>   
+    
+<?php echo $this->partial('content/footer'); ?>   
+ <!-- END FOOTER -->   
+
+     
+        <?php 
+        
+        echo $this->headScript()
+       
+        ->prependFile($this->basePath('js/paginador.js'))
+       // ->prependFile($this->basePath('assets/admin/pages/scripts/table-advanced.js'))
+        ->prependFile($this->basePath('assets/admin/layout/scripts/demo.js'))
+        ->prependFile($this->basePath('assets/admin/layout/scripts/quick-sidebar.js'))
+        ->prependFile($this->basePath('assets/admin/layout/scripts/layout.js'))
+        ->prependFile($this->basePath('assets/global/scripts/metronic.js'))
+        
+       // ->prependFile($this->basePath('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js'))
+        ->prependFile($this->basePath('assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js'))
+       // ->prependFile($this->basePath('assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js'))
+       // ->prependFile($this->basePath('assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js'))
+       // ->prependFile($this->basePath('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js'))
+        ->prependFile($this->basePath('js/widgets/jquery.tablesorter.pager.js'))
+        ->prependFile($this->basePath('js/widgets/widget-pager.js'))
+        ->prependFile($this->basePath('js/jquery.tablesorter.widgets.js'))
+        ->prependFile($this->basePath('js/jquery.tablesorter.js'))
+        ->prependFile($this->basePath('js/docs.js'))
+        ->prependFile($this->basePath('js/prettify.js'))
+       
+        
+        ->prependFile($this->basePath('plugins/select2/select2.min.js'))
+       // ->prependFile($this->basePath('plugins/icheck/icheck.min.js'))
+        ->prependFile($this->basePath('plugins/bootstrap-switch/js/bootstrap-switch.js'))
+        ->prependFile($this->basePath('plugins/ckeditor/ckeditor.js'))
+        ->prependFile($this->basePath('assets/global/plugins/uniform/jquery.uniform.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery.cokie.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery.blockui.min.js'))
+        ->prependFile($this->basePath('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js'))
+        ->prependFile($this->basePath('plugins/bootstrap/js/bootstrap.min.js'))
+        ->prependFile($this->basePath('plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js'))
+        ->prependFile($this->basePath('plugins/jquery-migrate.min.js'))
+        
+        ->prependFile($this->basePath('plugins/jquery.min.js'));
+        
+        echo $this->inlineScript()->appendScript("
+            $(document).ready(function() {       
+   Metronic.init(); // init metronic core components
+Layout.init(); // init current layout
+QuickSidebar.init(); // init quick sidebar
+Demo.init(); // init demo features
+ 
+});"); 
+        
+ 
+     ?>   
+        
+    </body>
+</html>
