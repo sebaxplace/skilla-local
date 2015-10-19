@@ -43,7 +43,7 @@
                             'action' => 'cercasessioni'
                         )));
                         
-                        $form->setAttribute('method', 'get'); 
+                        $form->setAttribute('method', 'post'); 
                         // Get the form label plugin
                         $formLabel = $this->plugin('formLabel');
                         // Render the opening tag
@@ -52,7 +52,7 @@
                         
                         ?>
                         
-                        <div class="col-md-4 nopadding">
+                        <div class="col-md-12 nopadding">
                             <div class="input-group">
                                 <?php $posterlab = $form->get('posterlab'); ?>
                                 <?php echo $formLabel->closeTag();?>							
@@ -65,30 +65,14 @@
                                 <?php echo $formLabel->closeTag();?>							
                                 <?php 				
                                      echo $this->formSelect($sessioni);
-                                     echo '<small class="label  label-danger">'.$this->formElementErrors($sessioni).'</small>';
-                                     ?> 
-                                     
-                                <?php $categoria = $form->get('categoria'); ?>
-                                <?php echo $formLabel->closeTag();?>							
-                                <?php 				
-                                     echo $this->formSelect($categoria);
-                                     echo '<small class="label  label-danger">'.$this->formElementErrors($categoria).'</small>';
-                                     ?> 
-                                
-                                <?php $stato = $form->get('stato'); ?>
-                                <?php echo $formLabel->closeTag();?>							
-                                <?php 				
-                                     echo $this->formSelect($stato);
-                                     echo '<small class="label  label-danger">'.$this->formElementErrors($stato).'</small>';
-                                     ?>      
-                                              
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($posterlab).'</small>';
+                                     ?>
                         		<span class="input-group-addon nopadding">
                         		  <?php echo $this->formElement($form->get('send')) ?> 
                         		</span>
                         											
                         	</div>
                         </div>	
-                        	
                         <?php echo $this->form()->closeTag() ?>
                     </div>
 

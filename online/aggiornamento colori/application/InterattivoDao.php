@@ -40,12 +40,29 @@ class InterattivoDao {
 
     public function tuttiPerId($id) {
         $id = (int) $id;
+        
         $select = $this->tableGateway->getSql()->select();
         $select->where(array('posterlab_id' => $id, 'stato'=>1));;
         //echo $select->getSqlString();die;
         $resultSet = $this->tableGateway->selectWith($select);
         $producto = $resultSet;
         
+        if (!$producto) {
+            throw new \Exception('Non ho trovato nessun id ' . $id);
+        }
+        return $producto;
+    }
+    
+    public function tuttiReport($id, $session) {
+        $id = (int) $id;
+        $session = (int) $session;
+        $select = $this->tableGateway->getSql()->select();
+        $select->where(array('posterlab_id' => $id, 'sessione'=>$session, 'stato'=>1));
+        $select->order('tipo ASC');
+        //echo $select->getSqlString();die;
+        $resultSet = $this->tableGateway->selectWith($select);
+        $producto = $resultSet;
+    
         if (!$producto) {
             throw new \Exception('Non ho trovato nessun id ' . $id);
         }
@@ -117,7 +134,6 @@ class InterattivoDao {
             'sessione'=> $interattivo->getSessione(),
             'data' => $interattivo->getData(),
             'stato'=> $interattivo->getStato(),
-            'categoria'=> $interattivo->getCategoria(),
            
         );
         
@@ -159,21 +175,6 @@ class InterattivoDao {
             }
     }
     
-    public function salvare3(Interattivo $interattivo) {
-    
-        $data = array('categoria' => $interattivo->getCategoria(),);
-    
-        $id = (int) $interattivo->getId();
-        $categoria = $interattivo->getCategoria();
-    
-    
-        if ($this->tuttiPerId($id)) {
-            $this->tableGateway->update(array ('categoria' => $categoria), array('id' => $id));
-        }
-    }
-    
-    
-    
     
     public function elimina2(Interattivo $interattivo) {
     
@@ -189,27 +190,11 @@ class InterattivoDao {
     }    
     
     
-    public function cercaPerPosterlab($id, $idsession, $categoria, $stato) {
+    public function cercaPerPosterlab($id) {
         $id = (int) $id;
-        $idsession = (int) $idsession;
-        $categoria = (int) $categoria;
-        $stato = (int) $stato;
-        
-        $data = array($id, $idsession, $categoria, $stato);
-       
-        
-        
         $select = $this->tableGateway->getSql()->select();
         $select->where(array('posterlab_id' => $id));
-        $select->where(array('sessione'=>$idsession));
-        if($categoria != 0){
-            $select->where(array('categoria'=>$categoria));
-        }
-        if($stato != 0){
-            if($stato == 2){$stato = 0;}
-        $select->where(array('stato'=>$stato));
-        }
-       // $select->greaterThan('');
+        //print_r($select);die;
         //echo $select->getSqlString();die;
         $resultSet = $this->tableGateway->selectWith($select);
          
@@ -218,19 +203,7 @@ class InterattivoDao {
         }
         return $resultSet;
     }
-    
-    public function categoria($id) {
-        $id = (int) $id;
-        $select = $this->tableGateway->getSql()->select();
-        $select->where(array('categoria' => $id, 'stato'=>1));
-        $resultSet = $this->tableGateway->selectWith($select);
-         
-        if (!$resultSet) {
-            throw new \Exception('Non ho trovato nessun id ' . $id);
-        }
-        return $resultSet;
-    }
-    
+    //domande & risposte
     public function cercaPerPosterlabAttivo($id, $last) {
         $id = (int) $id;
         $last = (int) $last;
@@ -259,6 +232,37 @@ class InterattivoDao {
         }
         return $resultSet;
     }
+    //domande
+    public function cercaPerPosterlabAttivo2($id, $last) {
+        $id = (int) $id;
+        $last = (int) $last;
+    
+        //print_r($last);die;
+        $select = $this->tableGateway->getSql()->select();
+        //$select->where(array('posterlab_id' => $id, 'stato'=>1 ));
+        $select->where(new \Zend\Db\Sql\Predicate\PredicateSet(
+            array(
+                new \Zend\Db\Sql\Predicate\Operator('id', '>', $last),
+                new \Zend\Db\Sql\Predicate\Operator('posterlab_id', '=', $id),
+                new \Zend\Db\Sql\Predicate\Operator('stato', '=', 1),
+                new \Zend\Db\Sql\Predicate\Operator('tipo', '=', 1),
+            ),
+            // optional; OP_AND is default
+            \Zend\Db\Sql\Predicate\PredicateSet::OP_AND
+        ),
+            // optional; OP_AND is default
+            \Zend\Db\Sql\Predicate\PredicateSet::OP_OR);
+    
+        $resultSet = $this->tableGateway->selectWith($select);
+        //echo $select->getSqlString();die;
+         
+        //print_r($resultSet);die;
+        if (!$resultSet) {
+            throw new \Exception('Non ho trovato nessun id ' . $id);
+        }
+        return $resultSet;
+    }
+    
     
 //para finalizar
     public function cercaPerNome($nome) {
@@ -336,10 +340,9 @@ class InterattivoDao {
     public function obtenerSessioniSelect($id) {
         $id = (int) $id;
         $categorias = $this->obtenerSessioni($id);
-        
+        //print_r($categorias['sessione']);die;
         $result = array();
         foreach ($categorias as $cat) {
-            
             $result[$cat->getSessione()] = $cat->getSessione();
         }
     

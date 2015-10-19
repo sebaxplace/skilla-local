@@ -1,0 +1,194 @@
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        <li><br><br></li>
+        <li class="centrado"><img src="<?php echo $this->basePath('images/logo_skilla.svg'); ?>" style="width:55px;vertical-align: bottom;padding-top:8px"> </li>
+         <li><br><br></li>
+        <?php foreach($this->posterlab as $posterlab):?>
+                     <li <?php if($posterlab->getId()  == $this->ids){echo ' class="active open"';} ?>> 
+                        <a href="<?php echo $this->basePath() ?>/application/index/posterlab/<?php echo $posterlab->getPosterlab()->getId().'?ids='.$posterlab->getId() ?>">
+                          <?php echo $posterlab->getPosizione(); ?>° 
+                         <span class="title"> Step
+                         <?php if($posterlab->getId()  == $this->ids){echo ' <i class="icon-chevron-small-right px24" style="float:right"></i>';}else{echo '<i class="icon-chevron-small-left px24 " style="float:right"></i>';} ?>
+					
+                         
+                         </span>
+                        </a>
+                     </li>   
+                    <?php endforeach;?>
+                    <li>
+					   <br><br>
+				    </li>
+				     <li>
+					   <br><br>
+				    </li>
+    				<li>
+    					<a href="<?php echo $this->basePath() ?>/application/index/chiudisessione/<?php echo $posterlab->getPosterlab()->getId(); ?>">Chiudi Sessione <i class="icon-lock px24" style="float:right"></i></a>
+    				</li>
+    				<li><br><br></li>
+        <li class="centrado"><img src="<?php echo $this->basePath('img/logo_xplace.svg'); ?>" style="width:50%;vertical-align: bottom;padding-top:8px"> </li>
+         <li><br><br></li>
+      </ul>
+    </aside>
+
+   
+
+    <section class="main-section h100">
+      <!-- content goes here -->
+   	
+	
+<div class="large-12 columns nopadding h100">
+<?php 
+
+if ($this->contenuto !== null):
+    if ($this->contenuto->getStato() !== 0):
+        if ($this->contenuto->getTipo() == 3): ?>
+        <div class="page-content h100" style="background:url(<?php echo  '/'.$this->imagen; ?>);background-size:cover;">
+            <div class="col-md-1"></div><div class="col-md-10">
+                <?php /*?><?php if($this->imagen != null):?><img src="<?php echo  '/'.$this->imagen; ?>" width="100%" /><?php endif;?><?php */?>
+                   <div style="top: 65px;left: 65px;z-index:2 !important;"><?php echo  $this->contenuto->getContenuto(); ?></div>
+              
+            </div> 
+        </div>
+    <?php 
+        else:
+            if($this->contenuto->getTipo() == 1 || $this->contenuto->getTipo() == 2):?>
+            <div class="page-content chat h100">
+              <div class="col-md-1"></div><div class="col-md-10">
+                <div id="main">
+                   <img src="<?php echo  '/'.$this->imagen; ?>" width="100%" />
+                    <?php 
+                   
+                    if($this->cantidad > 0):
+                       
+                        foreach($this->postit as $postit): 
+                            $posicion = $postit->getXyz();
+                            $pociciones = explode('x', $posicion);
+                    ?>
+                        <div class="note <?php echo $postit->getColor(); ?>" id="contenedor<?php echo $postit->getId(); ?>" style="left:<?php echo $pociciones[0]; ?>px;top:<?php echo $pociciones[1]; ?>px;z-index:<?php echo $pociciones[2]; ?>">
+                    		
+                        		<span class="elimino right top0" onClick="eliminar(<?php echo $postit->getId(); ?>)">
+                                    <i class="icon-cross  font-red plusicon2 px24"></i>
+                                </span>
+                                <span class="minimi left top0" onClick="minimi(<?php echo $postit->getId(); ?>)">
+                                    <i class="icon-popup px24"></i>
+                                </span>
+                            
+                    		<?php echo $this->escapeHtml($postit->getMessaggio()); ?>
+                    		<div class="author"><?php echo $this->escapeHtml($postit->getNome()); ?></div>
+                    		<span class="data"><?php echo $postit->getId(); ?></span>
+                    	</div>
+                    	
+
+                    <?php 
+                        endforeach; 
+                            endif;
+                            
+                            ?>
+                    <div style="display:none">
+                    <div class="previewNote note <?php
+                     if($this->contenuto->getTipo() == 1): echo 'yellow'; endif;
+                     if($this->contenuto->getTipo() == 2): echo 'blue'; endif; ?>" id="contenedor" style="left:0;top:65px;z-index:1">
+                        <span class="elimino right top0" onClick="eliminar(0)">
+                                <i class="icon-cross  font-red plusicon2 px24"></i>
+                            </span>
+                         <span class="minimi left top0" onClick="minimi(0)">
+                                    <i class="icon-popup px24"></i>
+                                </span>    
+                    	<div class="body"></div>
+                    	<div class="author"></div>
+                    	<span class="data"></span>
+                    </div>
+                    </div>
+              </div> 
+            </div>
+            </div>
+           <?php  
+           endif;
+       endif;
+    else:
+    ?>
+    <h4>Posterlab non trovato</h4>
+<?php 
+        endif;
+    endif;
+  ?>
+  
+  
+  <?php  if ($this->contenuto->getTipo() != 3): ?>
+                <div class="large-12 columns h100 bottom">
+                    <div class="contentmsg">
+                         <?php
+                        
+                        $form = $this->form; 
+                        $form->prepare();
+                        $form->setAttribute('action', $this->url('admin', array(
+                            'controller' => 'interattivo',
+                            'action' => 'guardar'
+                        )));
+                        $form->setAttribute('method', 'post'); 
+                        $form->setAttribute('class', 'note-form');
+                        // Get the form label plugin
+                        $formLabel = $this->plugin('formLabel');
+                        // Render the opening tag
+                        echo $this->form()->openTag($form);
+                        echo $this->formHidden($form->get('id'));
+                        echo $this->formHidden($form->get('xyz'));
+                        echo $this->formHidden($form->get('nome'));
+                        echo $this->formHidden($form->get('color'));
+                        echo $this->formHidden($form->get('posterlab'));
+                        echo $this->formHidden($form->get('tipo'));
+                        echo $this->formHidden($form->get('sessione'));
+                        echo $this->formHidden($form->get('data'));
+                        echo $this->formHidden($form->get('stato'));
+                        
+                        echo $this->formHidden($form->get('lasted'));
+                        
+                        ?>
+                        <div class="pdd15">
+                                <?php
+                                    $messaggio = $form->get('messaggio');
+                                    echo $formLabel->openTag();
+                                    echo $this->formtextarea($messaggio);
+                                 ?>
+                    
+                        <?php echo $this->formElement($form->get('send')) ?> 
+                        <?php echo $this->form()->closeTag() ?>	
+                        </div>
+                    </div>
+                </div>
+                <?php endif;?>
+                <div class="large-2 columns nopadding absolute bottom">
+                    <div class="large-12 columns bottom20">
+                        <div class="content-timer block foot">
+                            <div class="large-4 columns nopadding">
+                                <i class="icon-chat px36 grey2"></i>
+                            </div>
+                            <div class="large-6 columns nopadding">
+                                <div class="px14 top10 grey2">Partecipa</div>
+                                <div class="px30"><?php echo $this->password; ?></div>
+                                <div class="large-12 columns nopadding"></div>
+                            </div>
+                        </div>
+                     </div>
+                    <?php  if ($this->contenuto->getTipo() != 3): ?>
+                    <div class="large-6 columns right nopadding" >
+                        <div class="right">
+                            <div class="more">
+                                <span class="button boton nobg nascondi tiny occhio">
+                                    <i class="icon-eye px36"></i>
+                                </span>
+                                <span class="button boton mensaje nobg tiny plusicon addicon">
+                                    <i class="icon-plus px52 "></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+                    <?php endif;?>
+                </div>
+                
+</div>
+
+
+
+

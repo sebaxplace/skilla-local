@@ -8,7 +8,7 @@ class Interact extends Form {
     public function __construct($name = null){
         parent::__construct($name);
         
-        //id
+        //id+
         $this->add(array(
             'name' => 'id',
             'attributes' => array(
@@ -16,7 +16,16 @@ class Interact extends Form {
             ),
         ));
         
-        //xyz
+        //categoria+
+        $this->add(array(
+            'name' => 'categoria',
+            'attributes' => array(
+                'type' => 'hidden',
+            ),
+            
+        ));
+        
+        //xyz+
         $this->add(array(
             'name' => 'xyz',
             'attributes' => array(
@@ -24,7 +33,7 @@ class Interact extends Form {
             ),
         ));
         
-        //nome
+        //nome+
         $this->add(array(
             'name'=>'nome',
             
@@ -33,7 +42,23 @@ class Interact extends Form {
             ),
         ));
         
-        //messaggio
+        //sessione+
+        $this->add(array(
+            'name' => 'sessione',
+            'attributes' => array(
+                'type' => 'hidden',
+            ),
+        ));
+        
+        //data+
+        $this->add(array(
+            'name' => 'data',
+            'attributes' => array(
+                'type' => 'hidden',
+            ),
+        ));
+        
+        //messaggio+
         $this->add(array(
             'name'=>'messaggio',
             'options'=>array(
@@ -45,7 +70,7 @@ class Interact extends Form {
             ),
         ));
         
-        // Color
+        // Color+
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
             'name' => 'color',
@@ -58,7 +83,7 @@ class Interact extends Form {
             ),
         ));
         
-        // Posterlab
+        // Posterlab+
          $this->add(array(
             'type' => 'Zend\Form\Element\Select',
             'name' => 'posterlab',
@@ -73,7 +98,7 @@ class Interact extends Form {
         
        
       
-         // tipo
+         // tipo+
          $this->add(array(
              'type' => 'Zend\Form\Element\Select',
              'name' => 'tipo',
@@ -88,27 +113,17 @@ class Interact extends Form {
         
         
         
-        //sessione
-        $this->add(array(
-            'name' => 'sessione',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
+       
         
-        //data
-        $this->add(array(
-            'name' => 'data',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
-        
-        //stato
+        //stato+
         $stato = new Element\Checkbox('stato');
         $stato->setLabel('Stato');
         $stato->setAttribute('class', 'make-switch');
         $this->add($stato);
+        
+        
+        
+        
         
         $this->add(array(
             'name'=>'send',

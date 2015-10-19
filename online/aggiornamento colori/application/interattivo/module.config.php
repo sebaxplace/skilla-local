@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Interattivo\Controller\Index' => 'Interattivo\Controller\IndexController',
+           'Interattivo\Controller\Index' => 'Interattivo\Controller\IndexController',
         ),
     ),
     'router' => array(
@@ -29,7 +29,8 @@ return array(
     'view_manager' => array(
         'template_map' => array(
             
-            'interattivo/index/index' => __DIR__ . '/../view/interattivo/index/index.phtml',
+            'interattivo/estudiante/index' => __DIR__ . '/../view/interattivo/estudiante/index.phtml',
+            'interattivo/estudiante/registrar' => __DIR__ . '/../view/interattivo/estudiante/registrar.phtml',
             
         ),
         'template_path_stack' => array(

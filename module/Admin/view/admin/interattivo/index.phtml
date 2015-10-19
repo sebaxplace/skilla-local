@@ -43,7 +43,7 @@
                             'action' => 'cerca'
                         )));
                         
-                        $form->setAttribute('method', 'post'); 
+                        $form->setAttribute('method', 'get'); 
                         // Get the form label plugin
                         $formLabel = $this->plugin('formLabel');
                         // Render the opening tag
@@ -60,6 +60,28 @@
                                      echo $this->formSelect($posterlab);
                                      echo '<small class="label  label-danger">'.$this->formElementErrors($posterlab).'</small>';
                                      ?>
+                                     
+                                <?php $sessioni = $form->get('sessioni'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($sessioni);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($sessioni).'</small>';
+                                     ?> 
+                                     
+                                <?php $categoria = $form->get('categoria'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($categoria);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($categoria).'</small>';
+                                     ?> 
+                                
+                                <?php $stato = $form->get('stato'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($stato);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($stato).'</small>';
+                                     ?>      
+                                              
                         		<span class="input-group-addon nopadding">
                         		  <?php echo $this->formElement($form->get('send')) ?> 
                         		</span>
@@ -86,12 +108,12 @@
 								<th>Data</th>
 								<th>Tipo</th>
 								<th>Stato</th>
+								<th>Categoria</th>
 						
 						</thead>
 						<tfoot>
-
 							<tr>
-								<td colspan="6" style="background:#FFF !important;">
+								<td colspan="7" style="background:#FFF !important;">
 									<div class="pager">
 										<span class="left">  
 										<a href="#" class="current">10</a>
@@ -149,11 +171,34 @@
 								<td><?php
     
 if ($usuario->getStato() == 1) {
-        echo '<span class="label fleft label-sm label-success">Attivato</span>';
+        echo '<span class="label fleft label-sm label-success"><i class="fa fa-check"></i></span>';
     } else {
-        echo '<span class="label fleft label-sm label-danger">Disattivato</span>';
+        echo '<span class="label fleft label-sm label-danger"><i class="fa fa-times"></i></span>';
     }
     ?></td>
+    
+    <td>
+        <div class="col-md-7">
+            <div class="form-group">
+                <div class="margin-bottom-10" id="<?php echo $usuario->getId() ?>">
+                    <label for="option<?php echo $usuario->getId() ?>">Cat 1
+                    <input id="option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 1)" <?php if($usuario->getCategoria()==1){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="1"></label>
+                    <br/>
+                    <label for="2option<?php echo $usuario->getId() ?>">Cat 2
+                    <input id="2option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 2)" <?php if($usuario->getCategoria()==2){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="2"></label>
+                    <br/>
+                    <label for="3option<?php echo $usuario->getId() ?>">Cat 3
+                    <input id="3option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 3)" <?php if($usuario->getCategoria()==3){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="3"></label>
+                    
+                </div>
+                				
+            </div>
+        </div>
+        <div class="col-md-5">
+            <button class="btn red" onClick="categoria(<?php echo $usuario->getId() ?>, 0)"><i class="fa fa-trash-o"></i></button>
+            <div id="main<?php echo $usuario->getId() ?>"></div>		
+        </div>
+    </td>
 
 
 							</tr>
@@ -174,33 +219,7 @@ if ($usuario->getStato() == 1) {
 				</div>
 				
 					
-				<?php /*?>
-				<div class="pager">
-				<ul class="pagination" style="visibility: visible;">
 				
-						<li class="prev disabled"><a href="#" title="First"><i class="fa fa-angle-double-left"></i></a></li>
-						
-						<li class="first disabled"><a href="#" title="Prev"><i class="fa fa-angle-left"></i></a></li>
-						
-						<li class="last"><a href="#" title="Next"><i class="fa fa-angle-right"></i></a></li>
-						<li class="next"><a href="#" title="Last"><i class="fa fa-angle-double-right"></i></a></li>
-						<li class="pagedisplay" style="display:inline"></li>
-					</ul>
-					<!-- 
-					<i class="first fa fa-angle-left px28"></i> 
-					<i class="prev fa fa-angle-double-left px28"></i> 
-						<span class="pagedisplay"></span>
-					<!-- this can be any element, including an input 
-					<i class="next fa fa-angle-right px28"></i> 
-					<i class="last fa fa-angle-double-right px28"></i>  -->
-					<select class="pagesize" title="Select page size">
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-					</select> <select class="gotoPage" title="Select page number"></select>
-				</div>
-				<?php */?>
 			</div>
 		</div>
 	</div>

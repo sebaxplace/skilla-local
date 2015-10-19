@@ -2,7 +2,6 @@
 namespace Interattivo\Form;
 
 use Zend\Validator\StringLength;
-use Zend\I18n\Validator\Alnum;
 
 
 

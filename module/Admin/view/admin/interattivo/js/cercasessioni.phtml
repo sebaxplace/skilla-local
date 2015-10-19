@@ -1,0 +1,11 @@
+function cargarSelectSessioni(){
+    var data = "catId="+$('#posterlab').val();
+    $.ajax({
+    type: "POST",
+    url: "<?php echo $this->basePath('/admin/interattivo/sessioni')?>", 
+    data: data,
+    success: function(html){
+        $("#cargasessioni").html(html); 
+        }
+    });
+}

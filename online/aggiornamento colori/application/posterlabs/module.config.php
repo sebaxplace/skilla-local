@@ -2,22 +2,22 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Interattivo\Controller\Index' => 'Interattivo\Controller\IndexController',
+            'Posterlabs\Controller\Index' => 'Posterlabs\Controller\IndexController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'interattivo' => array(
+            'posterlabs' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/interattivo[/:controller][/:action][/:id]',
+                    'route'    => '/posterlabs[/:controller][/:action][/:id]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Interattivo\Controller',
+                        '__NAMESPACE__' => 'Posterlabs\Controller',
                         'controller' => 'Index',
                         'action' => 'index',
                     ),
@@ -29,11 +29,12 @@ return array(
     'view_manager' => array(
         'template_map' => array(
             
-            'interattivo/index/index' => __DIR__ . '/../view/interattivo/index/index.phtml',
+            'posterlabs/estudiante/index' => __DIR__ . '/../view/posterlabs/estudiante/index.phtml',
+            'posterlabs/estudiante/registrar' => __DIR__ . '/../view/posterlabs/estudiante/registrar.phtml',
             
         ),
         'template_path_stack' => array(
-           'Interattivo'=> __DIR__ . '/../view',
+           'Posterlabs'=> __DIR__ . '/../view',
         ),
     ),
 );

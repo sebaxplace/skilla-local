@@ -1,0 +1,32 @@
+function categoria(id, cat){
+        var idtag=id;
+        var categoriatag=cat;
+		var id = "id="+id;
+        var last = "categoria="+cat;
+        var data = id+'&'+ last;
+		//event.preventDefault();
+		$.ajax({
+        type: "POST",
+        url: "<?php echo $this->basePath('/admin/interattivo/guardacat'); ?>", 
+        data: data,
+        success: function(){
+        
+            var contenedor1 = '#uniform-option'+idtag;
+            var contenedor2 = '#uniform-2option'+idtag;
+            var contenedor3 = '#uniform-3option'+idtag;
+        
+            if(cat == 0){
+                $(contenedor1+ ' span').removeClass('checked');
+                $(contenedor2+ ' span').removeClass('checked');    
+                $(contenedor3+ ' span').removeClass('checked');
+            }
+            
+            $("#main"+idtag).fadeIn();
+            $("#main"+idtag).html('<br/><div class="btn green"><i class="fa fa-check"></i></div>');
+            
+             setTimeout(function(){
+                $("#main"+idtag).fadeOut();
+             }, 1000);
+        }
+    });
+}

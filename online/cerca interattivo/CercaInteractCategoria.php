@@ -4,7 +4,7 @@ namespace Interattivo\Form;
 use Zend\Form\Form;
 
 
-class CercaInteract extends Form
+class CercaInteractCategoria extends Form
 {
 
     public function __construct($id = null)
@@ -21,42 +21,22 @@ class CercaInteract extends Form
             'attributes'=> array(
                 'class'=>'form-control input-xlarge select2me',
                 'data-placeholder'=>"Select...",
-                'required'=>'required',
-                'onchange' => 'javascript:cargarSelectSessioni()',
-                'id' => 'posterlab',
+                'required'=>'required'
             ),
         ));
-
+         
          // Sessioni
          $this->add(array(
              'type' => 'Zend\Form\Element\Select',
              'name' => 'sessioni',
              'options' => array(
                  'label' => 'Sessioni',
-                 'empty_option' => 'Scegli una Sessione =>',
+                 'empty_option' => 'Scegli una sessione =>',
              ),
              'attributes'=> array(
                  'class'=>'form-control input-xlarge select2me',
                  'data-placeholder'=>"Select...",
-                 'required'=>'required',
-                 'onchange' => 'javascript:cargarSelectCategoria()',
-                 'id'=>'cargasessioni'
-             ),
-         ));
-         
-         // Categoria
-         $this->add(array(
-             'type' => 'Zend\Form\Element\Select',
-             'name' => 'categoria',
-             'options' => array(
-                 'label' => 'Stato',
-                 'empty_option' => 'Scegli una Categoria =>',
-             ),
-             'attributes'=> array(
-                 'class'=>'form-control input-xlarge select2me',
-                 'data-placeholder'=>"Select...",
-                 'onchange' => 'javascript:cargarSelectStato()',
-                 'id' => 'cargacategoria',
+                 'required'=>'required'
              ),
          ));
          
@@ -66,13 +46,27 @@ class CercaInteract extends Form
              'name' => 'stato',
              'options' => array(
                  'label' => 'Stato',
-                 'empty_option' => 'Scegli uno Stato =>',
+                 'empty_option' => 'Scegli uno stato =>',
              ),
              'attributes'=> array(
                  'class'=>'form-control input-xlarge select2me',
                  'data-placeholder'=>"Select...",
-                 'onchange' => 'javascript:cargarSelectStato()',
-                 'id' => 'cargastato',
+                 'required'=>'required'
+             ),
+         ));
+         
+         // Stato
+         $this->add(array(
+             'type' => 'Zend\Form\Element\Select',
+             'name' => 'categoria',
+             'options' => array(
+                 'label' => 'Stato',
+                 'empty_option' => 'Scegli una categoria =>',
+             ),
+             'attributes'=> array(
+                 'class'=>'form-control input-xlarge select2me',
+                 'data-placeholder'=>"Select...",
+                 'required'=>'required'
              ),
          ));
          

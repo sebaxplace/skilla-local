@@ -4,7 +4,6 @@ namespace Interattivo\Form;
 use Zend\Validator\StringLength;
 use Zend\I18n\Validator\Alnum;
 
-use Zend\InputFilter\FileInput;
 use Zend\InputFilter\InputFilter;
 //use Zend\Validator\File\MimeType;
 use Zend\InputFilter\Input;
@@ -62,6 +61,8 @@ $translatorMvc = new \Zend\Mvc\I18n\Translator($translator);
             )
         );
         
+       
+        
         
         
         $this->add(
@@ -91,7 +92,14 @@ $translatorMvc = new \Zend\Mvc\I18n\Translator($translator);
             )
         );
        
-        
+        /*$this->add(
+            array(
+                'name' => 'categoria',
+                'options' => array(
+                    'disable_inarray_validator' => true,
+                ),
+            )
+        );*/
         
         
         

@@ -98,7 +98,17 @@ class InterattivoDao {
         return $producto;
     }
     
-   
+    public function categoria($id) {
+        $id = (int) $id;
+        $select = $this->tableGateway->getSql()->select();
+        $select->where(array('categoria' => $id, 'stato'=>1));
+        $resultSet = $this->tableGateway->selectWith($select);
+         
+        if (!$resultSet) {
+            throw new \Exception('Non ho trovato nessun id ' . $id);
+        }
+        return $resultSet;
+    }
     
     
     public function eliminare(Interattivo $interattivo) {
@@ -173,8 +183,6 @@ class InterattivoDao {
     }
     
     
-    
-    
     public function elimina2(Interattivo $interattivo) {
     
         $data = array('stato' => $interattivo->getStato(),);
@@ -211,18 +219,6 @@ class InterattivoDao {
         }
        // $select->greaterThan('');
         //echo $select->getSqlString();die;
-        $resultSet = $this->tableGateway->selectWith($select);
-         
-        if (!$resultSet) {
-            throw new \Exception('Non ho trovato nessun id ' . $id);
-        }
-        return $resultSet;
-    }
-    
-    public function categoria($id) {
-        $id = (int) $id;
-        $select = $this->tableGateway->getSql()->select();
-        $select->where(array('categoria' => $id, 'stato'=>1));
         $resultSet = $this->tableGateway->selectWith($select);
          
         if (!$resultSet) {
@@ -336,10 +332,9 @@ class InterattivoDao {
     public function obtenerSessioniSelect($id) {
         $id = (int) $id;
         $categorias = $this->obtenerSessioni($id);
-        
+        //print_r($categorias['sessione']);die;
         $result = array();
         foreach ($categorias as $cat) {
-            
             $result[$cat->getSessione()] = $cat->getSessione();
         }
     

@@ -4,7 +4,7 @@ namespace Interattivo\Form;
 use Zend\Form\Form;
 
 
-class CercaInteract extends Form
+class CercaInteractCategoria extends Form
 {
 
     public function __construct($id = null)

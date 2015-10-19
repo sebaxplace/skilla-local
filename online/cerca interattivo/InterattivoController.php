@@ -121,6 +121,7 @@ class InterattivoController extends AbstractActionController
         $zposition = rand(1, 100);
         $form = $this->getForm();
         $form->get('posterlab')->setValueOptions($this->getInterattivoDao()->obtenerPosterlabsSelect());
+        //print_r($this->llenarListaTipo());die;
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
         $form->get('data')->setValue($fecha->format($patron));
         $form->get('color')->setValueOptions($this->llenarColor());
@@ -128,7 +129,6 @@ class InterattivoController extends AbstractActionController
         $form->get('sessione')->setValue(0);
         $form->get('stato')->setValue(1);
         $form->get('nome')->setValue('default');
-        $form->get('categoria')->setValue(0);
         $form->setInputFilter(new InteractValidator());
 
         return array(
@@ -156,25 +156,24 @@ class InterattivoController extends AbstractActionController
         $patron = 'Y-m-d H:i';
         $fecha = new DateTime();
         $form =  new Interact("interact");
-        $form->get('nome')->setValue('default');
         $form->get('posterlab')->setValueOptions($this->getInterattivoDao()->obtenerPosterlabsSelect());
         //print_r($this->llenarListaTipo());die;
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
         $form->get('data')->setValue($fecha->format($patron));
         $form->get('sessione')->setValue(0);
         $form->get('color')->setValueOptions($this->llenarColor());
-        $form->get('categoria')->setValue(0);
+        $form->get('nome')->setValue('default');
         $form->get('xyz')->setValue($xposition.'x'.$yposition.'x'.$zposition);
     
         $form->setInputFilter(new InteractValidator());
          
         $data = $this->getRequest()->getPost()->toArray();
-      //print_r($data);die;
+      
         $form->setData($data);
-        //print_r($data);die;
+         
         // Validando el form
         if (!$form->isValid()) {
-            $modelView = new ViewModel(array('title' => 'Aggiorno', 'form' => $form, 'volver'=>'Indietro','titulo' => 'Modifica Interattivo','sezione'=>'Interattivo'));
+            $modelView = new ViewModel(array('title' => 'Aggiorno', 'form' => $form, 'volver'=>'Indietro','titulo' => 'Modifica contenuto',));
             $modelView->setTemplate('admin/interattivo/crear');
             return $modelView;
         }
@@ -210,7 +209,7 @@ class InterattivoController extends AbstractActionController
         $form->get('color')->setValueOptions($this->llenarColor());
         $form->get('xyz')->setValue($xposition.'x'.$yposition.'x'.$zposition);
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
-        $form->get('categoria')->setValue(0);
+    
         $producto = $this->getInterattivoDao()->todosPerId($id);
         
         $form->bind($producto);
@@ -245,6 +244,7 @@ class InterattivoController extends AbstractActionController
         $nombreactualposter = $this->getContenutiDao()->obtenerPosterlabActual($idposterlab);
         $nombresito = $nombreactualposter->getTitolo();
     
+        $this->initAjaxContext();
         $this->initAjaxBusquedaContext();
         $tablastato = $this->config['parametros']['tabla']['stato'];
         $this->layout()->tablastato = $tablastato;
@@ -296,44 +296,46 @@ class InterattivoController extends AbstractActionController
         return $viewModel;
     }
     
-    
     public function sessioniAction(){
         if (!$this->request->isPost()) {
             return"error";
         }
         $catId = (int) $this->getRequest()->getPost("catId", 0);
-        
-       // $ver = $this->getInterattivoDao()->obtenerSessioniSelect($idposterlab);
-        
-        
+    
+        // $ver = $this->getInterattivoDao()->obtenerSessioniSelect($idposterlab);
+    
+    
         // Crear y configurar el elemento pais:
-        $producto = new Element\Select('categoria'); 
-        $producto->setLabel('categoria'); 
+        $producto = new Element\Select('categoria');
+        $producto->setLabel('categoria');
         $producto->setEmptyOption('Seleccione una Sessione =>');
         $producto->setValueOptions($this->getInterattivoDao()->obtenerSessioniSelect($catId));
-        
+    
         $view = new ViewModel(array(
             'selectProducto' => $producto, ));
         $view->setTerminal(true);
         return $view;
     }
-   
+    
     public function guardacatAction() {
     
         if (!$this->request->isPost()) {
             return"error";
         }
         $data = $this->getRequest()->getPost()->toArray();
-        
+    
         $id  = (int) $data['id'];
     
     
         $producto = new Interattivo();
         $producto->exchangeArray($data);
         $this->getInterattivoDao()->salvare3($producto);
-        
+        print_r($data);die;
         return $this;
     }
+    
+    
+    
     
     private function llenarListaSteps() {
     
@@ -427,7 +429,7 @@ class InterattivoController extends AbstractActionController
         $script = $renderer->render('admin/interattivo/js/categoria');
          
         $renderer->headScript()->appendScript($script, 'text/javascript');
-        
+    
         return $renderer;
     }
     
@@ -437,9 +439,8 @@ class InterattivoController extends AbstractActionController
         $script2 = $renderer->render('admin/interattivo/js/cercasessioni');
          
         $renderer->headScript()->appendScript($script2, 'text/javascript');
-        
+    
         return $renderer;
     }
-    
 }
 

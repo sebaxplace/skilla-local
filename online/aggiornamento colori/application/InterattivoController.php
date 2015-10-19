@@ -19,7 +19,6 @@ use Interattivo\Form\CercaInteract;
 use Interattivo\Form\CercaInteractSession;
 use Interattivo\Form\InteractValidator;
 use DateTime;
-use Zend\Form\Element;
 
 class InterattivoController extends AbstractActionController
 {
@@ -74,12 +73,9 @@ class InterattivoController extends AbstractActionController
     public function indexAction()
     {
         $form = new CercaInteract("CercaInteract");
+        
         $form->get('posterlab')->setValueOptions($this->getContenutiDao()->obtenerPosterlabsSelect());
-        //$form->get('sessioni')->setValueOptions($this->llenarListaCategorias());
-        $form->get('categoria')->setValueOptions($this->llenarCategorias());
-        $form->get('stato')->setValueOptions($this->llenarStati());
         $this->initAjaxContext();
-        $this->initAjaxBusquedaContext();
         return new ViewModel(array('usuarios' => $this->getInterattivoDao()->tutti(),'titulo' => 'Interattivo','form'=>$form));
     }
    
@@ -121,6 +117,7 @@ class InterattivoController extends AbstractActionController
         $zposition = rand(1, 100);
         $form = $this->getForm();
         $form->get('posterlab')->setValueOptions($this->getInterattivoDao()->obtenerPosterlabsSelect());
+        //print_r($this->llenarListaTipo());die;
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
         $form->get('data')->setValue($fecha->format($patron));
         $form->get('color')->setValueOptions($this->llenarColor());
@@ -128,7 +125,6 @@ class InterattivoController extends AbstractActionController
         $form->get('sessione')->setValue(0);
         $form->get('stato')->setValue(1);
         $form->get('nome')->setValue('default');
-        $form->get('categoria')->setValue(0);
         $form->setInputFilter(new InteractValidator());
 
         return array(
@@ -156,25 +152,24 @@ class InterattivoController extends AbstractActionController
         $patron = 'Y-m-d H:i';
         $fecha = new DateTime();
         $form =  new Interact("interact");
-        $form->get('nome')->setValue('default');
         $form->get('posterlab')->setValueOptions($this->getInterattivoDao()->obtenerPosterlabsSelect());
         //print_r($this->llenarListaTipo());die;
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
         $form->get('data')->setValue($fecha->format($patron));
         $form->get('sessione')->setValue(0);
         $form->get('color')->setValueOptions($this->llenarColor());
-        $form->get('categoria')->setValue(0);
+        $form->get('nome')->setValue('default');
         $form->get('xyz')->setValue($xposition.'x'.$yposition.'x'.$zposition);
     
         $form->setInputFilter(new InteractValidator());
          
         $data = $this->getRequest()->getPost()->toArray();
-      //print_r($data);die;
+      
         $form->setData($data);
-        //print_r($data);die;
+         
         // Validando el form
         if (!$form->isValid()) {
-            $modelView = new ViewModel(array('title' => 'Aggiorno', 'form' => $form, 'volver'=>'Indietro','titulo' => 'Modifica Interattivo','sezione'=>'Interattivo'));
+            $modelView = new ViewModel(array('title' => 'Aggiorno', 'form' => $form, 'volver'=>'Indietro','titulo' => 'Modifica contenuto',));
             $modelView->setTemplate('admin/interattivo/crear');
             return $modelView;
         }
@@ -210,7 +205,7 @@ class InterattivoController extends AbstractActionController
         $form->get('color')->setValueOptions($this->llenarColor());
         $form->get('xyz')->setValue($xposition.'x'.$yposition.'x'.$zposition);
         $form->get('tipo')->setValueOptions($this->llenarListaTipo());
-        $form->get('categoria')->setValue(0);
+    
         $producto = $this->getInterattivoDao()->todosPerId($id);
         
         $form->bind($producto);
@@ -235,30 +230,21 @@ class InterattivoController extends AbstractActionController
     
     public function cercaAction() {
         
-        $values = $this->getRequest()->getQuery()->toArray();
-        //print_r($values);die;
-        $idposterlab = $values["posterlab"];
-        $idsession = $values["sessioni"];
-        $categoria = $values["categoria"];
-        $stato = $values["stato"];
+        $idposterlab = $this->getRequest()->getPost("posterlab");
     
         $nombreactualposter = $this->getContenutiDao()->obtenerPosterlabActual($idposterlab);
         $nombresito = $nombreactualposter->getTitolo();
     
-        $this->initAjaxBusquedaContext();
+        
         $tablastato = $this->config['parametros']['tabla']['stato'];
         $this->layout()->tablastato = $tablastato;
     
-        $form = new CercaInteract("CercaInteract");
+        $form = new CercaInteractSession('CercaInteractSession');
         $form->get('posterlab')->setValueOptions($this->getContenutiDao()->obtenerPosterlabsSelect());
         $form->get('posterlab')->setValue($idposterlab);
         $form->get('sessioni')->setValueOptions($this->getInterattivoDao()->obtenerSessioniSelect($idposterlab));
-        $form->get('sessioni')->setValue($idsession);
-        $form->get('categoria')->setValueOptions($this->llenarCategorias());
-        
-        $form->get('categoria')->setValue($categoria);
-        $form->get('stato')->setValueOptions($this->llenarStati());
-        $form->get('stato')->setValue($stato);
+         
+        //print_r($this->getInterattivoDao()->obtenerSessioniSelect());die;
     
         $placenombre = $this->config['parametros']['placeholder']['nombre'];
         $placebuscar = $this->config['parametros']['placeholder']['buscar'];
@@ -273,7 +259,7 @@ class InterattivoController extends AbstractActionController
             return $this->redirect()->toRoute('admin', array('controller' => 'contenuti', 'action' => 'index'));
         }
     
-        $listaUsuario = $this->getInterattivoDao()->cercaPerPosterlab($idposterlab, $idsession, $categoria, $stato);
+        $listaUsuario = $this->getInterattivoDao()->cercaPerPosterlab($idposterlab);
         $viewModel = new ViewModel(array(
             'form'=> $form,
             'usuarios' => $listaUsuario,
@@ -291,49 +277,84 @@ class InterattivoController extends AbstractActionController
             'tablastato'=>$tablastato,
         ));
     
-        $viewModel->setTemplate("admin/interattivo/index");
+        //$viewModel->setTemplate("admin/interattivo/index");
     
         return $viewModel;
     }
     
-    
-    public function sessioniAction(){
-        if (!$this->request->isPost()) {
-            return"error";
-        }
-        $catId = (int) $this->getRequest()->getPost("catId", 0);
-        
-       // $ver = $this->getInterattivoDao()->obtenerSessioniSelect($idposterlab);
-        
-        
-        // Crear y configurar el elemento pais:
-        $producto = new Element\Select('categoria'); 
-        $producto->setLabel('categoria'); 
-        $producto->setEmptyOption('Seleccione una Sessione =>');
-        $producto->setValueOptions($this->getInterattivoDao()->obtenerSessioniSelect($catId));
-        
-        $view = new ViewModel(array(
-            'selectProducto' => $producto, ));
-        $view->setTerminal(true);
-        return $view;
-    }
-   
     public function guardacatAction() {
     
         if (!$this->request->isPost()) {
             return"error";
         }
         $data = $this->getRequest()->getPost()->toArray();
-        
+    
         $id  = (int) $data['id'];
     
     
         $producto = new Interattivo();
         $producto->exchangeArray($data);
         $this->getInterattivoDao()->salvare3($producto);
-        
+        print_r($data);die;
         return $this;
     }
+    
+    public function cercasessioniAction() {
+    
+        $idposterlab = $this->getRequest()->getPost("posterlab");
+        $idsession = $this->getRequest()->getPost("sessioni");
+    
+        $nombreactualposter = $this->getContenutiDao()->obtenerPosterlabActual($idposterlab);
+        $nombresito = $nombreactualposter->getTitolo();
+    
+    
+        $tablastato = $this->config['parametros']['tabla']['stato'];
+        $this->layout()->tablastato = $tablastato;
+    
+        $form = new CercaInteractSession('CercaInteractSession');
+        $form->get('posterlab')->setValueOptions($this->getContenutiDao()->obtenerPosterlabsSelect());
+        $form->get('posterlab')->setValue($idposterlab);
+        $form->get('sessioni')->setValueOptions($this->getInterattivoDao()->obtenerSessioniSelect($idposterlab));
+        $form->get('sessioni')->setValue($idsession);
+        //print_r($this->getInterattivoDao()->obtenerSessioniSelect());die;
+    
+        $placenombre = $this->config['parametros']['placeholder']['nombre'];
+        $placebuscar = $this->config['parametros']['placeholder']['buscar'];
+        $placever = $this->config['parametros']['placeholder']['ver'];
+        $encontrados = $this->config['parametros']['buscar']['encontrados'];
+        $this->layout()->placenom = $placenombre;
+        $this->layout()->busca = $placebuscar;
+        $this->layout()->ver = $placever;
+        $this->layout()->encontrados = $encontrados;
+    
+        if (null === $idposterlab || empty($idposterlab)) {
+            return $this->redirect()->toRoute('admin', array('controller' => 'contenuti', 'action' => 'index'));
+        }
+    
+        $listaUsuario = $this->getInterattivoDao()->posterysession($idposterlab, $idsession);
+        $viewModel = new ViewModel(array(
+            'form'=> $form,
+            'usuarios' => $listaUsuario,
+            'titulo' => 'Interattivo',
+            'titulo1' => ucfirst($nombresito),
+            'titulos' => 'Trovati (' . $listaUsuario->count() . ') ',
+            'title' => 'Lista Interattivo',
+    
+    
+            'placenom' => $placenombre,
+            'placebusca' => $placebuscar,
+            'placever' => $placever,
+            'posicion' => 'Posizione',
+    
+            'tablastato'=>$tablastato,
+        ));
+    
+        $viewModel->setTemplate("admin/interattivo/cerca");
+    
+        return $viewModel;
+    }
+    
+    
     
     private function llenarListaSteps() {
     
@@ -385,61 +406,14 @@ class InterattivoController extends AbstractActionController
          return $form;
     }
     
-    private function llenarListaCategorias() {
-    
-        // Data reference de números para radiobuttons
-        $numeros = array();
-        $numeros[1] = "Numero 1";
-        $numeros[2] = "Numero 2";
-        $numeros[3] = "Numero 3";
-        $numeros[4] = "Numero 4";
-        $numeros[5] = "Numero 5";
-        $numeros[6] = "Numero 6";
-        $numeros[7] = "Numero 7";
-    
-        return $numeros;
-    }
-    
-    private function llenarCategorias() {
-    
-        // Data reference de números para radiobuttons
-        $numeros = array();
-        $numeros[1] = "Cat 1";
-        $numeros[2] = "Cat 2";
-        $numeros[3] = "Cat 3";
-    
-        return $numeros;
-    }
-    
-    private function llenarStati() {
-    
-        // Data reference de números para radiobuttons
-        $numeros = array();
-        $numeros[1] = "Attivato";
-        $numeros[2] = "Disattivato";
-    
-        return $numeros;
-    }
-    
     public function initAjaxContext() {
         $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
     
         $script = $renderer->render('admin/interattivo/js/categoria');
          
         $renderer->headScript()->appendScript($script, 'text/javascript');
-        
+    
         return $renderer;
     }
-    
-    public function initAjaxBusquedaContext() {
-        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
-    
-        $script2 = $renderer->render('admin/interattivo/js/cercasessioni');
-         
-        $renderer->headScript()->appendScript($script2, 'text/javascript');
-        
-        return $renderer;
-    }
-    
 }
 

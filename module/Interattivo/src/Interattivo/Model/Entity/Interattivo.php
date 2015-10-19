@@ -25,6 +25,8 @@ class Interattivo
 	
 	private $stato = false;
 	
+	private $categoria;
+	
 	
 	public function getId()
 	{
@@ -115,6 +117,14 @@ class Interattivo
 	    $this->stato = $stato;
 	}
 	
+	public function getCategoria(){
+	    return $this->categoria;
+	}
+	
+	public function setCategoria($categoria){
+	    $this->categoria = $categoria;
+	}
+	
 	
 	
 	public function exchangeArray($data) {
@@ -128,6 +138,7 @@ class Interattivo
 	    $this->sessione = (isset($data['sessione'])) ? $data['sessione'] : null;
 	    $this->data = (isset($data['data'])) ? $data['data'] : null;
 	    $this->stato = (isset($data['stato'])) ? $data['stato'] : null;
+	    $this->categoria = (isset($data['categoria'])) ? $data['categoria'] : null;
 	   
 	    
 	    $this->posterlab = new Posterlabs();
