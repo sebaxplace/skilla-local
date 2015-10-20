@@ -1,0 +1,227 @@
+
+<div class="page-content-wrapper ">
+	<div class="page-content">
+
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><i class="fa fa-weixin"></i> <a href="#"><?php echo $this->titulo;?></a>
+					<i class="fa fa-angle-right"></i></li>
+				
+				<?php if($this->titulo1 !== null):?>
+					<li>
+					Cerca Posterlab
+					<i class="fa fa-angle-right"></i>
+					</li>
+					
+					<li>
+					<?php echo $this->titulo1; ?>
+					<i class="fa fa-angle-right"></i>
+					</li>
+					
+					<li>
+					<?php echo $this->titulos; ?>
+					</li>
+					<?php endif;?>	
+
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-6 pull-right no-padding">
+					<a href="<?php echo $this->basePath() ?>/admin/interattivo/crear"
+						class="btn green-jungle pull-right">Aggiungi nuovo <i
+						class="fa fa-plus white"></i></a>
+				</div>
+                <div class="col-md-6 pull-left no-padding">
+					   <?php
+
+                        // within a view script 
+                        $form = $this->form; 
+                        $form->prepare();
+                        $form->setAttribute('action', $this->url('admin', array(
+                            'controller' => 'interattivo',
+                            'action' => 'cercasessioni'
+                        )));
+                        
+                        $form->setAttribute('method', 'get'); 
+                        // Get the form label plugin
+                        $formLabel = $this->plugin('formLabel');
+                        // Render the opening tag
+                        echo $this->form()->openTag($form);
+                        
+                        
+                        ?>
+                        
+                        <div class="col-md-4 nopadding">
+                            <div class="input-group">
+                                <?php $posterlab = $form->get('posterlab'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($posterlab);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($posterlab).'</small>';
+                                     ?>
+                                     
+                                <?php $sessioni = $form->get('sessioni'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($sessioni);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($sessioni).'</small>';
+                                     ?> 
+                                     
+                                <?php $categoria = $form->get('categoria'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($categoria);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($categoria).'</small>';
+                                     ?> 
+                                
+                                <?php $stato = $form->get('stato'); ?>
+                                <?php echo $formLabel->closeTag();?>							
+                                <?php 				
+                                     echo $this->formSelect($stato);
+                                     echo '<small class="label  label-danger">'.$this->formElementErrors($stato).'</small>';
+                                     ?>      
+                                              
+                        		<span class="input-group-addon nopadding">
+                        		  <?php echo $this->formElement($form->get('send')) ?> 
+                        		</span>
+                        											
+                        	</div>
+                        </div>	
+                        	
+                        <?php echo $this->form()->closeTag() ?>
+                    </div>
+
+
+
+
+
+
+				<div class=" table-responsive col-md-12 nopadding">
+					<table class="table tablesorter" role="grid" id="sample_2"
+						role="grid" aria-describedby="sample_2_info">
+						<thead>
+							<tr class="heading">
+
+								<th class="cien">Id</th>
+								<th>Messaggio</th>
+								<th>Posterlab</th>
+								<th>Data</th>
+								<th>Tipo</th>
+								<th>Stato</th>
+								<th>Categoria</th>
+						
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="7" style="background:#FFF !important;">
+									<div class="pager">
+										<span class="left">  
+										<a href="#" class="current">10</a>
+											| <a href="#">25</a> | <a href="#">50</a> | <a href="#">100</a>
+											# per pagina
+										</span> 
+										<div class="right">
+											<ul class="pagination" style="visibility: visible;">
+												<li class="prev">
+												<a href="#" title="First"><i class="fa fa-angle-left"></i></a></li>
+												<li class="pagecount"><a href="#" title="Prev"><i class="fa fa-angle-left"></i></a></li>
+												<li class="next"><a href="#" title="Next"><i class="fa fa-angle-right"></i></a></li>
+											</ul> 
+										    
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+						<tbody>
+            
+<?php foreach ($this->usuarios as $usuario): ?>
+        <tr role="row" class="odd edit">
+
+								<td><?php echo $usuario->getId() ?> </td>
+
+								<td class="sorting_1">
+									<p class="titolo"><?php echo $this->escapeHtml($usuario->getMessaggio()); ?></p>
+									<div class="row-actions">
+										<span><a
+											href="<?php echo $this->basePath() ?>/admin/interattivo/editar/<?php echo $usuario->getId() ?>">Modifica</a>
+											| </span> <span><a
+											onclick="return confirm('Vuoi eliminare a <?php echo $this->escapeHtml($usuario->getMessaggio()); ?>?');"
+											href="<?php echo $this->basePath() ?>/admin/interattivo/eliminar/<?php echo $usuario->getId() ?>">Elimina</a>
+											| </span> <span><a
+											href="<?php echo $this->basePath() ?>/admin/interattivo/ver/<?php echo $usuario->getId() ?>">Visualizza</a></span>
+									</div>
+								</td>
+								<td>
+									<p class="titolo"> <?php if($this->titulo1 !== null):?>
+                                    <?php echo $this->titulo1; ?>
+                                    <?php else:?>
+                                     <?php echo $usuario->getPosterlab()->getTitolo(); ?>
+                                    <?php endif;?></p>
+								</td>
+								<td>
+                <?php echo $this->dateFormat(new DateTime($usuario->getData()), IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM,'it_IT');  ?>
+            </td>
+
+								<td>
+                <?php if($usuario->getTipo() == 1):echo 'Domanda'; endif; ?>
+                <?php if($usuario->getTipo() == 2):echo 'Risposta'; endif; ?>
+            </td>
+
+								<td><?php
+    
+if ($usuario->getStato() == 1) {
+        echo '<span class="label fleft label-sm label-success"><i class="fa fa-check"></i></span>';
+    } else {
+        echo '<span class="label fleft label-sm label-danger"><i class="fa fa-times"></i></span>';
+    }
+    ?></td>
+    
+    <td>
+        <div class="col-md-7">
+            <div class="form-group">
+                <div class="margin-bottom-10" id="<?php echo $usuario->getId() ?>">
+                    <label for="option<?php echo $usuario->getId() ?>">
+                    <input id="option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 1)" <?php if($usuario->getCategoria()==1){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="1"> Creativi</label>
+                    <br/>
+                    <label for="2option<?php echo $usuario->getId() ?>">
+                    <input id="2option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 2)" <?php if($usuario->getCategoria()==2){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="2"> Interessanti</label>
+                    <br/>
+                    <label for="3option<?php echo $usuario->getId() ?>">
+                    <input id="3option<?php echo $usuario->getId() ?>" onClick="categoria(<?php echo $usuario->getId() ?>, 3)" <?php if($usuario->getCategoria()==3){echo ' checked="checked"';} ?> type="radio" name="radio<?php echo $usuario->getId() ?>" value="3"> Utili</label>
+                    
+                </div>
+                				
+            </div>
+        </div>
+        <div class="col-md-5">
+            <button class="btn red" onClick="categoria(<?php echo $usuario->getId() ?>, 0)"><i class="fa fa-trash-o"></i></button>
+            <div id="main<?php echo $usuario->getId() ?>"></div>		
+        </div>
+    </td>
+
+
+							</tr>
+							
+    <?php endforeach; ?>
+    <?php
+    $this->cycle()->assign(array(
+        "#F0F0F0",
+        "#FFFFFF"
+    ));
+    $this->cycle()->prev();
+    ?>
+
+					
+					
+					</tbody>
+					</table>
+				</div>
+				
+					
+				
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,6 @@
+<?php
+$formLabel = $this->plugin('formLabel');
+$producto = $this->selectProducto;
+echo $formLabel->openTag() . $producto->getOption('label'); echo $formLabel->closeTag();
+echo $this->formSelect($producto);
+?>
